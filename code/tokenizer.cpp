@@ -43,9 +43,6 @@ public:
             return false;
         }
 
-        std::cout << "Model loaded successfully: " << model_path << std::endl;
-        std::cout << "Number of tensors: " << gguf_get_n_tensors(ctx) << std::endl;
-        
         // Load vocabulary
         if (!load_vocabulary()) {
             std::cerr << "Failed to load vocabulary" << std::endl;
@@ -81,7 +78,6 @@ public:
 
         // Get vocabulary size
         const size_t vocab_size = gguf_get_arr_n(ctx, vocab_key);
-        std::cout << "Vocabulary size: " << vocab_size << std::endl;
 
         // Load token to id mapping
         for (size_t i = 0; i < vocab_size; i++) {
@@ -94,87 +90,21 @@ public:
     }
 
     void print_config() {
-        std::cout << "--- Model Configuration ---" << std::endl;
-        
-        // Print number of key-value pairs
-        const int64_t n_kv = gguf_get_n_kv(ctx);
-        std::cout << "Number of metadata key-value pairs: " << n_kv << std::endl;
-        
-        // Print each key-value pair
-        for (int64_t i = 0; i < n_kv; i++) {
-            const char* key = gguf_get_key(ctx, i);
-            enum gguf_type type = gguf_get_kv_type(ctx, i);
-            
-            std::cout << key << " (";
-            
-            switch (type) {
-                case GGUF_TYPE_UINT8:
-                    std::cout << "uint8): " << (int)gguf_get_val_u8(ctx, i) << std::endl;
-                    break;
-                case GGUF_TYPE_INT8:
-                    std::cout << "int8): " << (int)gguf_get_val_i8(ctx, i) << std::endl;
-                    break;
-                case GGUF_TYPE_UINT16:
-                    std::cout << "uint16): " << gguf_get_val_u16(ctx, i) << std::endl;
-                    break;
-                case GGUF_TYPE_INT16:
-                    std::cout << "int16): " << gguf_get_val_i16(ctx, i) << std::endl;
-                    break;
-                case GGUF_TYPE_UINT32:
-                    std::cout << "uint32): " << gguf_get_val_u32(ctx, i) << std::endl;
-                    break;
-                case GGUF_TYPE_INT32:
-                    std::cout << "int32): " << gguf_get_val_i32(ctx, i) << std::endl;
-                    break;
-                case GGUF_TYPE_FLOAT32:
-                    std::cout << "float32): " << gguf_get_val_f32(ctx, i) << std::endl;
-                    break;
-                case GGUF_TYPE_UINT64:
-                    std::cout << "uint64): " << gguf_get_val_u64(ctx, i) << std::endl;
-                    break;
-                case GGUF_TYPE_INT64:
-                    std::cout << "int64): " << gguf_get_val_i64(ctx, i) << std::endl;
-                    break;
-                case GGUF_TYPE_FLOAT64:
-                    std::cout << "float64): " << gguf_get_val_f64(ctx, i) << std::endl;
-                    break;
-                case GGUF_TYPE_BOOL:
-                    std::cout << "bool): " << (gguf_get_val_bool(ctx, i) ? "true" : "false") << std::endl;
-                    break;
-                case GGUF_TYPE_STRING:
-                    std::cout << "string): " << gguf_get_val_str(ctx, i) << std::endl;
-                    break;
-                case GGUF_TYPE_ARRAY:
-                    std::cout << "array): [size: " << gguf_get_arr_n(ctx, i) << "]" << std::endl;
-                    break;
-                default:
-                    std::cout << "unknown type)" << std::endl;
-                    break;
-            }
-        }
-        
-        std::cout << "------------------------" << std::endl;
+        // Simplified - removed verbose configuration output
+        std::cout << "Model loaded: " << model_path << std::endl;
+        std::cout << "Vocabulary size: " << id_to_token.size() << std::endl;
     }
 
     void print_vocabulary_sample(int n = 20) {
         std::cout << "--- Vocabulary Sample ---" << std::endl;
-        std::cout << "First " << n << " tokens:" << std::endl;
         
         int count = 0;
         for (const auto& entry : id_to_token) {
             if (count >= n) break;
             
-            // Print token id and the token text (escape non-printable characters)
-            std::cout << entry.first << ": ";
-            
-            for (char c : entry.second) {
-                if (isprint(c)) {
-                    std::cout << c;
-                } else {
-                    std::cout << "\\x" << std::hex << std::setw(2) << std::setfill('0') << (int)(unsigned char)c;
-                }
-            }
-            std::cout << std::endl;
+            // Simplified - just show ID and token
+            std::cout << "ID " << std::setw(5) << entry.first << ": ";
+            std::cout << entry.second << std::endl;
             
             count++;
         }
@@ -182,7 +112,7 @@ public:
         std::cout << "------------------------" << std::endl;
     }
 
-    std::vector<float> get_embeddings(const std::string& text) {
+    std::vector<float> get_embeddings(int token_id) {
         std::vector<float> embeddings;
         
         if (!ctx) {
@@ -201,9 +131,6 @@ public:
         const char* tensor_name = gguf_get_tensor_name(ctx, embedding_tensor_idx);
         enum ggml_type tensor_type = gguf_get_tensor_type(ctx, embedding_tensor_idx);
         
-        std::cout << "Found embedding tensor: " << tensor_name << std::endl;
-        std::cout << "Embedding tensor type: " << ggml_type_name(tensor_type) << std::endl;
-
         // Create a ggml tensor to properly handle the embedding data
         struct ggml_tensor* embd_tensor = ggml_get_tensor(ggml_ctx, tensor_name);
         if (!embd_tensor) {
@@ -214,13 +141,6 @@ public:
         // Get dimensions of the embedding tensor
         const int64_t n_vocab = embd_tensor->ne[0]; // vocab size
         const int64_t n_embd = embd_tensor->ne[1];  // embedding dimension
-        
-        std::cout << "Vocabulary size from tensor: " << n_vocab << std::endl;
-        std::cout << "Embedding dimension: " << n_embd << std::endl;
-
-        // In a real implementation, we would tokenize the text into token IDs
-        // For simplicity, let's just use token ID 1 as an example
-        const int token_id = 1;
         
         if (token_id >= n_vocab) {
             std::cerr << "Token ID out of range" << std::endl;
@@ -252,6 +172,17 @@ public:
         }
 
         return embeddings;
+    }
+
+    std::vector<float> get_embeddings(const std::string& text) {
+        // Tokenize the input text
+        std::vector<int> tokens = tokenize(text);
+        
+        // Use the first token if available, otherwise default to token ID 1
+        int token_id = tokens.empty() ? 1 : tokens[0];
+        std::cout << "Using token ID " << token_id << " for embedding" << std::endl;
+        
+        return get_embeddings(token_id);
     }
 
     // Find the closest token to a given embedding using cosine similarity
@@ -336,6 +267,69 @@ public:
             return "Token not found";
         }
     }
+
+    std::vector<int> tokenize(const std::string& text) {
+        std::vector<int> tokens;
+        
+        // In a production tokenizer, we would have proper byte-pair encoding or similar
+        // This is a simplified version that just looks for exact token matches
+        
+        std::string remaining = text;
+        std::cout << "Tokenizing: \"" << text << "\"" << std::endl;
+        std::cout << "Token IDs: ";
+        
+        // Note about tokenization
+        std::cout << "\n(Note: LLM tokenizers typically have special tokens for spaces. In many tokenizers," << std::endl;
+        std::cout << "spaces are represented with a prefix like 'Ġ'. Capitalization also affects tokenization.)" << std::endl;
+        std::cout << "\nTokens from C++ implementation: ";
+        
+        while (!remaining.empty()) {
+            // Simple greedy tokenization - find the longest matching token
+            std::string best_token = "";
+            int best_id = -1;
+            
+            for (const auto& entry : token_to_id) {
+                const std::string& token = entry.first;
+                
+                if (token.length() > best_token.length() && 
+                    remaining.substr(0, token.length()) == token) {
+                    best_token = token;
+                    best_id = entry.second;
+                }
+            }
+            
+            if (best_id == -1) {
+                // No match found, skip one character
+                remaining = remaining.substr(1);
+            } else {
+                tokens.push_back(best_id);
+                
+                // Show token ID and original token representation
+                std::cout << best_id;
+                if (!best_token.empty()) {
+                    std::cout << "(";
+                    for (char c : best_token) {
+                        if (isprint(c)) {
+                            std::cout << c;
+                        } else {
+                            std::cout << "\\x" << std::hex << std::setw(2) << std::setfill('0') 
+                                      << (int)(unsigned char)c;
+                        }
+                    }
+                    std::cout << std::dec << std::setfill(' ') << ") ";
+                } else {
+                    std::cout << " ";
+                }
+                
+                remaining = remaining.substr(best_token.length());
+            }
+        }
+        
+        std::cout << std::endl;
+        std::cout << "Total tokens: " << tokens.size() << std::endl;
+        
+        return tokens;
+    }
 };
 
 void print_usage() {
@@ -361,27 +355,14 @@ int main(int argc, char** argv) {
         return 1;
     }
     
-    // Print model configuration
+    // Print minimal model info
     tokenizer.print_config();
     
     // Print vocabulary sample
     tokenizer.print_vocabulary_sample();
     
-    // Get embeddings
-    std::vector<float> embeddings = tokenizer.get_embeddings(text);
+    // Tokenize the input text - this is the main focus
+    std::vector<int> tokens = tokenizer.tokenize(text);
     
-    // Print first few embeddings
-    std::cout << "Embeddings for text: \"" << text << "\"" << std::endl;
-    const int max_print = std::min(10, (int)embeddings.size());
-    std::cout << "First " << max_print << " embedding values:" << std::endl;
-    for (int i = 0; i < max_print; i++) {
-        std::cout << embeddings[i] << " ";
-    }
-    std::cout << "..." << std::endl;
-    std::cout << "Total embedding size: " << embeddings.size() << std::endl;
-    
-    // Find the closest token to the embedding
-    std::cout << "Closest token to the embedding: " << tokenizer.find_closest_token(embeddings) << std::endl;
-
     return 0;
 }
