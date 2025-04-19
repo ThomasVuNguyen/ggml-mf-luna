@@ -7,13 +7,13 @@ import argparse
 def print_usage():
     print("Usage: python tokenizer.py [--model MODEL_NAME] [text]")
     print("  MODEL_NAME: Name or path of the model to use (default: meta-llama/Llama-3.2-1B)")
-    print("  text: Text to tokenize (default: \"Hello world thomas\")")
+    # print("  text: Text to tokenize (default: \"Hello world thomas\")")
 
 def main():
     # Parse arguments
     parser = argparse.ArgumentParser(description="Tokenize text using a transformer model")
     parser.add_argument("--model", default="meta-llama/Llama-3.2-1B", help="Model name or path")
-    parser.add_argument("text", nargs="?", default="Hello world thomas", help="Text to tokenize")
+    parser.add_argument("text", nargs="?", default="Make America great again, and again, never yield.", help="Text to tokenize")
     args = parser.parse_args()
     
     model_name = args.model

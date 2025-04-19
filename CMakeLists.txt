@@ -8,11 +8,15 @@ add_subdirectory(ggml) # Add files in ggml/ folder, which is where ggml.h exists
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}) # Include current directory - for >
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/ggml/include) # Include GGML headers
 
+# Create a library for tokenizer implementation
+add_library(tokenizer_lib code/tokenizer_lib.cpp)
+target_link_libraries(tokenizer_lib PRIVATE ggml)
+target_compile_features(tokenizer_lib PRIVATE cxx_std_17)
+
 # demo
 set(CODE_TARGETS
     tokenizer
-    test
-    
+    model
     ) # Target all the example files
 
 foreach(TARGET ${CODE_TARGETS}) # For each example file
@@ -20,3 +24,6 @@ foreach(TARGET ${CODE_TARGETS}) # For each example file
   target_link_libraries(${TARGET} PRIVATE ggml) # Include ggml library
   target_compile_features(${TARGET} PRIVATE cxx_std_17) # Requires C++ v17 standard>
 endforeach()
+
+# Link model with tokenizer library
+target_link_libraries(model PRIVATE tokenizer_lib)
