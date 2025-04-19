@@ -13,6 +13,10 @@ add_library(tokenizer_lib code/tokenizer_lib.cpp)
 target_link_libraries(tokenizer_lib PRIVATE ggml)
 target_compile_features(tokenizer_lib PRIVATE cxx_std_17)
 
+# Create a library for embedding implementation
+add_library(embedding_lib code/embedding.cpp)
+target_compile_features(embedding_lib PRIVATE cxx_std_11)
+
 # demo
 set(CODE_TARGETS
     tokenizer
@@ -26,6 +30,6 @@ foreach(TARGET ${CODE_TARGETS}) # For each example file
   target_compile_features(${TARGET} PRIVATE cxx_std_17) # Requires C++ v17 standard>
 endforeach()
 
-# Link model and tokenizer_test with tokenizer library
-target_link_libraries(model PRIVATE tokenizer_lib)
+# Link targets with tokenizer library
+target_link_libraries(model PRIVATE tokenizer_lib embedding_lib)
 target_link_libraries(tokenizer_test PRIVATE tokenizer_lib)
