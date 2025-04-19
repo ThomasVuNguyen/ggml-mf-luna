@@ -7,7 +7,7 @@ int main() {
     Tokenizer tokenizer("./gguf/1b-q8_0.gguf");
     
     // Print vocabulary sample to inspect tokens
-    tokenizer.print_vocabulary_sample(30);
+    // tokenizer.print_vocabulary_sample(30);
     
     std::cout << "Tokenizing text..." << std::endl;
     std::string text = "Make America great again, and again, never yield.";

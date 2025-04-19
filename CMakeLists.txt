@@ -17,6 +17,7 @@ target_compile_features(tokenizer_lib PRIVATE cxx_std_17)
 set(CODE_TARGETS
     tokenizer
     model
+    tokenizer_test
     ) # Target all the example files
 
 foreach(TARGET ${CODE_TARGETS}) # For each example file
@@ -25,5 +26,6 @@ foreach(TARGET ${CODE_TARGETS}) # For each example file
   target_compile_features(${TARGET} PRIVATE cxx_std_17) # Requires C++ v17 standard>
 endforeach()
 
-# Link model with tokenizer library
+# Link model and tokenizer_test with tokenizer library
 target_link_libraries(model PRIVATE tokenizer_lib)
+target_link_libraries(tokenizer_test PRIVATE tokenizer_lib)
