@@ -1,0 +1,10 @@
+Loading tokenizer...
+Tokens for 'Thomas the Maker':
+Token 0: ID 128000
+Token 1: ID 42493
+Token 2: ID 279
+Token 3: ID 41628
+Embedding for token 128000 (first 5 values): 0.490731 0.932782 0.987403 0.300706 0.494076 
+Embedding for token 42493 (first 5 values): 0.36132 0.0914503 0.742904 0.0230027 0.334034 
+Embedding for token 279 (first 5 values): 0.375454 0.878602 0.278029 0.813241 0.211771 
+Embedding for token 41628 (first 5 values): 0.809182 0.265626 0.171498 0.772857 0.58368 

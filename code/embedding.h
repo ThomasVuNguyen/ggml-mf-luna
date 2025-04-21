@@ -10,6 +10,11 @@
 #include <string.h>
 #include <math.h>
 
+// Forward declarations for GGML/GGUF types
+struct gguf_context;
+struct ggml_context;
+struct llama_model;  // Keep for backward compatibility
+
 // Configuration structure for the model
 typedef struct {
     int dim;         // embedding dimension
@@ -19,6 +24,9 @@ typedef struct {
 // Structure to hold the embedding table
 typedef struct {
     float* token_embedding_table;  // (vocab_size, dim)
+    struct gguf_context* ctx;      // GGUF context
+    struct ggml_context* ggml_ctx; // GGML context
+    struct llama_model* model;     // Pointer to llama model (if used)
 } EmbeddingWeights;
 
 // Load embedding weights from a file
@@ -32,6 +40,9 @@ void get_token_embedding(float* embedding, const EmbeddingWeights* weights, int 
 
 // Apply layer normalization to embeddings (RMSNorm variant)
 void rmsnorm(float* output, const float* input, const float* weight, int size);
+
+// Normalize embedding (L2 normalization)
+void normalize_embedding(float* embedding, int dim);
 
 // Initialize embedding system
 void init_embedding_system(EmbeddingConfig* config, EmbeddingWeights* weights, const char* weight_path);
