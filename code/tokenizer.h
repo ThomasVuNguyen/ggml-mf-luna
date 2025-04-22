@@ -37,6 +37,9 @@ public:
     std::vector<float> get_embeddings(const std::string& text);
     std::string find_closest_token(const std::vector<float>& embedding);
     std::vector<int> tokenize(const std::string& text);
+    int64_t get_hidden_size();
+    struct gguf_context* get_gguf_context() const { return ctx; }
+    struct ggml_context* get_ggml_context() const { return ggml_ctx; }
 };
 
 #endif // TOKENIZER_H 

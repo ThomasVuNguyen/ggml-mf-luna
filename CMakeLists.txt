@@ -15,7 +15,6 @@ target_compile_features(tokenizer_lib PRIVATE cxx_std_17)
 
 # demo
 set(CODE_TARGETS
-    tokenizer
     model
     embedding
     ) # Target all the example files
@@ -28,3 +27,5 @@ endforeach()
 
 # Link model with tokenizer library
 target_link_libraries(model PRIVATE tokenizer_lib)
+# Link embedding with tokenizer library
+target_link_libraries(embedding PRIVATE tokenizer_lib)

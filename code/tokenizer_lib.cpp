@@ -1,4 +1,5 @@
 #include "tokenizer.h"
+#include <cstring>
 
 Tokenizer::Tokenizer(const std::string& model_path) : model_path(model_path), ctx(nullptr), ggml_ctx(nullptr) {
     load_model();
@@ -141,7 +142,7 @@ std::vector<float> Tokenizer::get_embeddings(int token_id) {
         qtype->to_float(token_embedding, row_f32.data(), n_embd);
     } else {
         // Fallback for non-quantized types
-        memcpy(row_f32.data(), token_embedding, n_embd * sizeof(float));
+        std::memcpy(row_f32.data(), token_embedding, n_embd * sizeof(float));
     }
 
     // Copy to output
@@ -213,7 +214,7 @@ std::string Tokenizer::find_closest_token(const std::vector<float>& embedding) {
             qtype->to_float(token_embedding, token_embd.data(), n_embd);
         } else {
             // Fallback for non-quantized types
-            memcpy(token_embd.data(), token_embedding, n_embd * sizeof(float));
+            std::memcpy(token_embd.data(), token_embedding, n_embd * sizeof(float));
         }
         
         // Calculate cosine similarity
@@ -336,4 +337,29 @@ std::vector<int> Tokenizer::tokenize(const std::string& text) {
     }
     
     return tokens;
+}
+
+int64_t Tokenizer::get_hidden_size() {
+    if (!ctx) {
+        std::cerr << "Model not loaded" << std::endl;
+        return -1;
+    }
+
+    // Find the embedding tensor
+    int64_t embedding_tensor_idx = gguf_find_tensor(ctx, "token_embd.weight");
+    if (embedding_tensor_idx < 0) {
+        std::cerr << "Embedding tensor not found in model" << std::endl;
+        return -1;
+    }
+
+    // Get tensor and its dimensions
+    const char* tensor_name = gguf_get_tensor_name(ctx, embedding_tensor_idx);
+    struct ggml_tensor* embd_tensor = ggml_get_tensor(ggml_ctx, tensor_name);
+    if (!embd_tensor) {
+        std::cerr << "Failed to get embedding tensor" << std::endl;
+        return -1;
+    }
+
+    // Return the embedding dimension (hidden size)
+    return embd_tensor->ne[1];
 } 

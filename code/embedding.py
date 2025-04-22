@@ -1,7 +1,7 @@
 import llama_cpp
 
-llm = llama_cpp.Llama(model_path="./gguf/1b-q8_0.gguf", embedding=True)
-prompt = "Thomas the Maker"
+llm = llama_cpp.Llama(model_path="../gguf/1b-q8_0.gguf", embedding=True, verbose=False)
+prompt = "Thomas"
 info = llm.create_embedding(prompt)
 
 tokens = llm.tokenize(prompt.encode())
@@ -15,6 +15,6 @@ embeddings = info['data'][0]['embedding']
 
 for embedding in embeddings:
     print("Embedding (first 5 values):", embedding[:5])
+    print("Embedding size:", len(embedding))
 
-    from llama_cpp import Llama
 
