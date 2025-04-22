@@ -13,6 +13,11 @@ add_library(tokenizer_lib code/tokenizer_lib.cpp)
 target_link_libraries(tokenizer_lib PRIVATE ggml)
 target_compile_features(tokenizer_lib PRIVATE cxx_std_17)
 
+# Create a library for RMS normalization
+add_library(rms_norm_lib code/rms_norm.cpp)
+target_link_libraries(rms_norm_lib PRIVATE ggml tokenizer_lib)
+target_compile_features(rms_norm_lib PRIVATE cxx_std_17)
+
 # demo
 set(CODE_TARGETS
     model
@@ -20,7 +25,6 @@ set(CODE_TARGETS
     config
     example_matrix
     rms_norm
-    embedding_pipeline
     ) # Target all the example files
 
 foreach(TARGET ${CODE_TARGETS}) # For each example file
@@ -30,12 +34,10 @@ foreach(TARGET ${CODE_TARGETS}) # For each example file
 endforeach()
 
 # Link model with tokenizer library
-target_link_libraries(model PRIVATE tokenizer_lib)
+target_link_libraries(model PRIVATE tokenizer_lib rms_norm_lib)
 # Link embedding with tokenizer library
 target_link_libraries(embedding PRIVATE tokenizer_lib)
 # Link config with tokenizer library
 target_link_libraries(config PRIVATE tokenizer_lib)
 # Link rms_norm with tokenizer library
 target_link_libraries(rms_norm PRIVATE tokenizer_lib)
-# Link embedding_pipeline with tokenizer library
-target_link_libraries(embedding_pipeline PRIVATE tokenizer_lib)
