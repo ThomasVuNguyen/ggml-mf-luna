@@ -18,6 +18,7 @@ set(CODE_TARGETS
     model
     embedding
     config
+    example_matrix
     ) # Target all the example files
 
 foreach(TARGET ${CODE_TARGETS}) # For each example file
