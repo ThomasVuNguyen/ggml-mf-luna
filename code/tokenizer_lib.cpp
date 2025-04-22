@@ -91,7 +91,7 @@ void Tokenizer::print_vocabulary_sample(int n) {
     std::cout << "------------------------" << std::endl;
 }
 
-std::vector<float> Tokenizer::get_embeddings(int token_id) {
+std::vector<float> Tokenizer::get_embeddings(int token_id) const {
     std::vector<float> embeddings;
     
     if (!ctx) {
@@ -153,7 +153,7 @@ std::vector<float> Tokenizer::get_embeddings(int token_id) {
     return embeddings;
 }
 
-std::vector<float> Tokenizer::get_embeddings(const std::string& text) {
+std::vector<float> Tokenizer::get_embeddings(const std::string& text) const {
     // Tokenize the input text
     std::vector<int> tokens = tokenize(text);
     
@@ -243,7 +243,7 @@ std::string Tokenizer::find_closest_token(const std::vector<float>& embedding) {
     return closest_token;
 }
 
-std::vector<int> Tokenizer::tokenize(const std::string& text) {
+std::vector<int> Tokenizer::tokenize(const std::string& text) const {
     std::vector<int> tokens;
     
     if (text.empty() || token_to_id.empty()) {

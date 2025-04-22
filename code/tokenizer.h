@@ -1,5 +1,4 @@
-#ifndef TOKENIZER_H
-#define TOKENIZER_H
+#pragma once
 
 #include <iostream>
 #include <fstream>
@@ -33,13 +32,11 @@ public:
     bool load_vocabulary();
     void print_config();
     void print_vocabulary_sample(int n = 20);
-    std::vector<float> get_embeddings(int token_id);
-    std::vector<float> get_embeddings(const std::string& text);
+    std::vector<float> get_embeddings(int token_id) const;
+    std::vector<float> get_embeddings(const std::string& text) const;
     std::string find_closest_token(const std::vector<float>& embedding);
-    std::vector<int> tokenize(const std::string& text);
+    std::vector<int> tokenize(const std::string& text) const;
     int64_t get_hidden_size();
     struct gguf_context* get_gguf_context() const { return ctx; }
     struct ggml_context* get_ggml_context() const { return ggml_ctx; }
-};
-
-#endif // TOKENIZER_H 
+}; 

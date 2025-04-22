@@ -17,6 +17,7 @@ target_compile_features(tokenizer_lib PRIVATE cxx_std_17)
 set(CODE_TARGETS
     model
     embedding
+    config
     ) # Target all the example files
 
 foreach(TARGET ${CODE_TARGETS}) # For each example file
