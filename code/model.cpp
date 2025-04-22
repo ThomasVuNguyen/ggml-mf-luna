@@ -34,6 +34,8 @@ int main() {
         
         // Print embeddings for this token
         std::cout << "\nExtract embeddings for token ID " << tokens[i] << ":" << std::endl;
+        std::vector<float> embeddings = tokenizer.get_embeddings(tokens[i]);
+        std::cout << "Embedding dimensions: " << embeddings.size() << std::endl;
         print_token_embedding(tokenizer, tokens[i]);
         std::cout << "----------------------------------------------" << std::endl;
     }

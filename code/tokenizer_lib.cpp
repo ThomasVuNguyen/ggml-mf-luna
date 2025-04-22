@@ -118,8 +118,8 @@ std::vector<float> Tokenizer::get_embeddings(int token_id) const {
     }
 
     // Get dimensions of the embedding tensor
-    const int64_t n_vocab = embd_tensor->ne[0]; // vocab size
-    const int64_t n_embd = embd_tensor->ne[1];  // embedding dimension
+    const int64_t n_vocab = embd_tensor->ne[1]; // vocab size (second dimension)
+    const int64_t n_embd = embd_tensor->ne[0];  // embedding dimension (first dimension)
     
     if (token_id >= n_vocab) {
         std::cerr << "Token ID out of range" << std::endl;

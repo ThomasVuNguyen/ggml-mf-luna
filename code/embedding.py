@@ -1,7 +1,7 @@
 import llama_cpp
 
-llm = llama_cpp.Llama(model_path="../gguf/1b-q8_0.gguf", embedding=True, verbose=False)
-prompt = "Thomas"
+llm = llama_cpp.Llama(model_path="./gguf/1b-q8_0.gguf", embedding=True, verbose=False)
+prompt = "Thomas the Maker!"
 info = llm.create_embedding(prompt)
 
 tokens = llm.tokenize(prompt.encode())

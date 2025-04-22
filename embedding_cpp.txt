@@ -1,0 +1,67 @@
+Loading tokenizer...
+Tokenizing text...
+Tokens for 'Thomas the Maker!':
+Token 0: ID 42493 = 'Thomas'
+
+Extract embeddings for token ID 42493:
+Embedding dimensions: 2048
+Embedding vector (first 10 dimensions):
+ 0: 0.0106163
+ 1: -0.00772095
+ 2: 0.00627327
+ 3: 0.0178547
+ 4: -0.0135117
+ 5: 0.000482559
+ 6: 0.061285
+ 7: 0.00627327
+ 8: 0.0535641
+ 9: -0.00820351
+----------------------------------------------
+Token 1: ID   279 = 'Ġthe'
+
+Extract embeddings for token ID 279:
+Embedding dimensions: 2048
+Embedding vector (first 10 dimensions):
+ 0: -0.0063343
+ 1: -0.018651
+ 2: 0.0267448
+ 3: -0.0351906
+ 4: -0.00809383
+ 5: -0.018651
+ 6: -0.00809383
+ 7: 0.0105572
+ 8: 0.00668621
+ 9: -0.00140762
+----------------------------------------------
+Token 2: ID 41628 = 'ĠMaker'
+
+Extract embeddings for token ID 41628:
+Embedding dimensions: 2048
+Embedding vector (first 10 dimensions):
+ 0: 0.0147243
+ 1: -0.00250626
+ 2: -0.0178571
+ 3: 0.0260024
+ 4: -0.00125313
+ 5: 0.0187969
+ 6: -0.000626564
+ 7: -0.0335212
+ 8: 0.0194235
+ 9: -0.00971174
+----------------------------------------------
+Token 3: ID     0 = '!'
+
+Extract embeddings for token ID 0:
+Embedding dimensions: 2048
+Embedding vector (first 10 dimensions):
+ 0: 0.0043087
+ 1: 0.0167561
+ 2: 0.0210648
+ 3: -0.0105324
+ 4: 0.00765991
+ 5: 0.0086174
+ 6: 0.0105324
+ 7: 0.0043087
+ 8: 0.00957489
+ 9: 0.0043087
+----------------------------------------------
