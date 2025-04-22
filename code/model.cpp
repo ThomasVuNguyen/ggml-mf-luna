@@ -8,13 +8,15 @@
 #include <string>
 #include <cmath>
 
+
+
 int main() {
     std::cout << "Loading tokenizer..." << std::endl;
     Tokenizer tokenizer("./gguf/1b-q8_0.gguf");
     
     // ===== Tokenization Example =====
     std::cout << "Tokenizing text..." << std::endl;
-    std::string text = "!";
+    std::string text = "Thomas the Maker!";
     std::vector<int> tokens = tokenizer.tokenize(text);
     
     std::cout << "Tokens for '" << text << "':" << std::endl;

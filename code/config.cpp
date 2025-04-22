@@ -74,7 +74,7 @@ void extract_model_config(const Tokenizer& tokenizer) {
     }
     
     // Add vocabulary size
-    std::cout << "  \"vocab_size\": " << tokenizer.id_to_token.size() << "\n";
+    std::cout << "  \"vocab_size\": " << tokenizer.get_vocab_size() << "\n";
     
     std::cout << "}" << std::endl;
 }

@@ -253,7 +253,7 @@ std::vector<int> Tokenizer::tokenize(const std::string& text) const {
     // Check if there's a BOS (beginning of string) token
     std::string bos_token = "<s>";
     if (token_to_id.find(bos_token) != token_to_id.end()) {
-        tokens.push_back(token_to_id[bos_token]);
+        tokens.push_back(token_to_id.at(bos_token));
     }
     
     // Process text with special handling for spaces
@@ -272,7 +272,7 @@ std::vector<int> Tokenizer::tokenize(const std::string& text) const {
             
             // Try direct match
             if (token_to_id.find(substr) != token_to_id.end()) {
-                tokens.push_back(token_to_id[substr]);
+                tokens.push_back(token_to_id.at(substr));
                 pos += len;
                 found = true;
                 first_token = false;
@@ -286,12 +286,12 @@ std::vector<int> Tokenizer::tokenize(const std::string& text) const {
                 std::string with_underscore = "_" + substr.substr(1);     // _ prefix
                 
                 if (token_to_id.find(with_special_space) != token_to_id.end()) {
-                    tokens.push_back(token_to_id[with_special_space]);
+                    tokens.push_back(token_to_id.at(with_special_space));
                     pos += len;
                     found = true;
                     break;
                 } else if (token_to_id.find(with_underscore) != token_to_id.end()) {
-                    tokens.push_back(token_to_id[with_underscore]);
+                    tokens.push_back(token_to_id.at(with_underscore));
                     pos += len;
                     found = true;
                     break;
@@ -309,17 +309,17 @@ std::vector<int> Tokenizer::tokenize(const std::string& text) const {
                 std::string with_underscore = "_";     // _ prefix alone
                 
                 if (token_to_id.find(with_special_space) != token_to_id.end()) {
-                    tokens.push_back(token_to_id[with_special_space]);
+                    tokens.push_back(token_to_id.at(with_special_space));
                 } else if (token_to_id.find(with_underscore) != token_to_id.end()) {
-                    tokens.push_back(token_to_id[with_underscore]);
+                    tokens.push_back(token_to_id.at(with_underscore));
                 } else if (token_to_id.find(single_char) != token_to_id.end()) {
-                    tokens.push_back(token_to_id[single_char]);
+                    tokens.push_back(token_to_id.at(single_char));
                 } else {
                     // Unknown token
                     tokens.push_back(0);
                 }
             } else if (token_to_id.find(single_char) != token_to_id.end()) {
-                tokens.push_back(token_to_id[single_char]);
+                tokens.push_back(token_to_id.at(single_char));
             } else {
                 // Unknown token
                 tokens.push_back(0);
@@ -333,7 +333,7 @@ std::vector<int> Tokenizer::tokenize(const std::string& text) const {
     // Check if there's an EOS (end of string) token
     std::string eos_token = "</s>";
     if (token_to_id.find(eos_token) != token_to_id.end()) {
-        tokens.push_back(token_to_id[eos_token]);
+        tokens.push_back(token_to_id.at(eos_token));
     }
     
     return tokens;
@@ -362,4 +362,17 @@ int64_t Tokenizer::get_hidden_size() {
 
     // Return the embedding dimension (hidden size)
     return embd_tensor->ne[1];
+}
+
+void print_token_embedding(const Tokenizer& tokenizer, int token_id) {
+    std::vector<float> embedding = tokenizer.get_embeddings(token_id);
+    if (embedding.empty()) {
+        std::cout << "Failed to get embedding for token ID " << token_id << std::endl;
+        return;
+    }
+
+    std::cout << "Embedding vector (first 10 dimensions):" << std::endl;
+    for (size_t i = 0; i < std::min(size_t(10), embedding.size()); i++) {
+        std::cout << std::setw(2) << i << ": " << std::setprecision(6) << embedding[i] << std::endl;
+    }
 } 

@@ -30,3 +30,5 @@ endforeach()
 target_link_libraries(model PRIVATE tokenizer_lib)
 # Link embedding with tokenizer library
 target_link_libraries(embedding PRIVATE tokenizer_lib)
+# Link config with tokenizer library
+target_link_libraries(config PRIVATE tokenizer_lib)
