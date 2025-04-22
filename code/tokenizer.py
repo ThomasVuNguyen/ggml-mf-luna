@@ -63,7 +63,7 @@ def main():
     parser.add_argument("--output", default="py_tokenizer_results.csv", help="Output file for benchmark results")
     parser.add_argument("--benchmark", action="store_true", help="Run benchmark on multiple prompts")
     parser.add_argument("--fallback", default="meta-llama/Llama-3.2-1B", help="Fallback model to use if local file doesn't exist")
-    parser.add_argument("text", nargs="?", default="Make America great again, and again, never yield.", help="Text to tokenize (ignored if --benchmark is used)")
+    parser.add_argument("text", nargs="?", default="Thomas the Maker", help="Text to tokenize (ignored if --benchmark is used)")
     args = parser.parse_args()
     
     model_name = args.model

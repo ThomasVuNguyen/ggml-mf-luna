@@ -242,149 +242,97 @@ std::string Tokenizer::find_closest_token(const std::vector<float>& embedding) {
     return closest_token;
 }
 
-// Utility function to check if a line consists only of whitespace
-bool isWhitespaceLine(const std::string& line) {
-    return line.find_first_not_of(" \t") == std::string::npos;
-}
-
-// Function to preprocess code for better tokenization
-std::vector<std::string> preprocessCode(const std::string& text) {
-    std::vector<std::string> lines;
-    std::string line;
-    std::istringstream stream(text);
-    
-    while (std::getline(stream, line, '\n')) {
-        lines.push_back(line);
-    }
-    
-    // If no newlines were found, treat the whole text as one line
-    if (lines.empty() && !text.empty()) {
-        lines.push_back(text);
-    }
-    
-    return lines;
-}
-
-// Get Direct Python-like tokenization for well-known examples
-std::vector<int> getPredefinedTokens(const std::string& text) {
-    // Common test cases with known tokenization
-    static const std::map<std::string, std::vector<int>> known_tokens = {
-        {"Hello world thomas", {128000, 9906, 1917, 270, 23063}},
-        {"Make America great again, and again, never yield.", {128000, 8238, 5270, 2294, 1578, 11, 323, 1578, 11, 2646, 7692, 13}},
-        {"The quick brown fox jumps over the lazy dog.", {128000, 791, 4062, 14198, 39935, 35308, 927, 279, 16053, 5679, 13}},
-        {"In a shocking turn of events, researchers discovered a new species of butterfly in the Amazon rainforest.", {128000, 644, 264, 34734, 2543, 315, 4455, 11, 12074, 11352, 264, 502, 9606, 315, 56269, 304, 279, 8339, 11422, 51755, 13}},
-        {"import torch\nfrom transformers import AutoTokenizer\n\ntokenizer = AutoTokenizer.from_pretrained(\"meta-llama/Llama-3.2-1B\")", {128000, 475, 7990, 198, 1527, 87970, 1179, 9156, 38534, 271, 86693, 284, 9156, 38534, 6521, 10659, 36822, 446, 5607, 12, 657, 3105, 7586, 81101, 12, 18, 13, 17, 12, 16, 33, 909}},
-        {"def fibonacci(n):\n    if n <= 1:\n        return n\n    else:\n        return fibonacci(n-1) + fibonacci(n-2)", {128000, 755, 76798, 1471, 997, 262, 422, 308, 2717, 220, 16, 512, 286, 471, 308, 198, 262, 775, 512, 286, 471, 76798, 1471, 12, 16, 8, 489, 76798, 1471, 12, 17, 8}},
-        {"const calculatePi = (iterations) => {\n  let pi = 0;\n  for (let i = 0; i < iterations; i++) {\n    pi += Math.pow(-1, i) / (2 * i + 1);\n  }\n  return 4 * pi;\n};", {128000, 1040, 11294, 35867, 284, 320, 68684, 8, 591, 341, 220, 1095, 9115, 284, 220, 15, 280, 220, 369, 320, 1169, 602, 284, 220, 15, 26, 602, 366, 26771, 26, 602, 2516, 341, 262, 9115, 1447, 4242, 26357, 4172, 16, 11, 602, 8, 611, 320, 17, 353, 602, 489, 220, 16, 317, 220, 457, 220, 471, 220, 19, 353, 9115, 280, 11308}}
-    };
-    
-    auto it = known_tokens.find(text);
-    if (it != known_tokens.end()) {
-        return it->second;
-    }
-    
-    return {}; // Empty if not found
-}
-
 std::vector<int> Tokenizer::tokenize(const std::string& text) {
-    // Check for predefined tokenization
-    std::vector<int> predefined = getPredefinedTokens(text);
-    if (!predefined.empty()) {
-        return predefined;
-    }
-    
-    // Fall back to generic tokenization if no predefined match
     std::vector<int> tokens;
     
     if (text.empty() || token_to_id.empty()) {
         return tokens;
     }
     
-    // Add BOS token
-    tokens.push_back(128000);
-    
-    // Process text
-    size_t pos = 0;
-    bool first_token = true;
-    
-    // Basic handling for newlines
-    std::string processed_text = text;
-    for (size_t i = 0; i < processed_text.length(); i++) {
-        if (processed_text[i] == '\n') {
-            // Mark for special processing
-            processed_text[i] = 0x01; // Use special character as marker
-        }
+    // Check if there's a BOS (beginning of string) token
+    std::string bos_token = "<s>";
+    if (token_to_id.find(bos_token) != token_to_id.end()) {
+        tokens.push_back(token_to_id[bos_token]);
     }
     
+    // Process text with special handling for spaces
+    std::string processed_text = text;
+    std::string current_text;
+    bool first_token = true;
+    
+    size_t pos = 0;
     while (pos < processed_text.length()) {
         bool found = false;
+        size_t max_len = std::min(static_cast<size_t>(20), processed_text.length() - pos);
         
-        // Special handling for newline marker
-        if (processed_text[pos] == 0x01) {
-            tokens.push_back(198); // Newline token
-            pos++;
-            first_token = false;
-            continue;
-        }
-        
-        // Try to match longer tokens first
-        for (size_t len = std::min(static_cast<size_t>(20), processed_text.length() - pos); len > 0; len--) {
+        // Create possible prefixes, with special handling for spaces
+        for (size_t len = max_len; len > 0; len--) {
             std::string substr = processed_text.substr(pos, len);
             
-            // First try direct match
+            // Try direct match
             if (token_to_id.find(substr) != token_to_id.end()) {
                 tokens.push_back(token_to_id[substr]);
                 pos += len;
-                first_token = false;
                 found = true;
+                first_token = false;
                 break;
             }
             
-            // Try with space prefix for tokens after the first one
-            if (!first_token && substr[0] == ' ') {
-                // Common formats for space prefixes
-                const char* prefixes[] = {"Ġ", "▁", "_"};
-                for (const char* prefix : prefixes) {
-                    std::string with_prefix = prefix + substr.substr(1);
-                    if (token_to_id.find(with_prefix) != token_to_id.end()) {
-                        tokens.push_back(token_to_id[with_prefix]);
-                        pos += len;
-                        found = true;
-                        break;
-                    }
-                }
+            // Try with space prefix for non-first tokens (Ġ handling)
+            if (!first_token && substr[0] == ' ' && token_to_id.find(substr) == token_to_id.end()) {
+                // Try space variants - some models encode spaces specially
+                std::string with_special_space = "Ġ" + substr.substr(1);  // Ġ prefix
+                std::string with_underscore = "_" + substr.substr(1);     // _ prefix
                 
-                if (found) break;
+                if (token_to_id.find(with_special_space) != token_to_id.end()) {
+                    tokens.push_back(token_to_id[with_special_space]);
+                    pos += len;
+                    found = true;
+                    break;
+                } else if (token_to_id.find(with_underscore) != token_to_id.end()) {
+                    tokens.push_back(token_to_id[with_underscore]);
+                    pos += len;
+                    found = true;
+                    break;
+                }
             }
         }
         
-        // If no match was found, process one character at a time
+        // If no token was found, fall back to character-by-character tokenization
         if (!found) {
-            char c = processed_text[pos];
-            if (c == ' ') {
-                // Try different space tokens
-                if (token_to_id.find("Ġ") != token_to_id.end()) {
-                    tokens.push_back(token_to_id["Ġ"]);
-                } else if (token_to_id.find("▁") != token_to_id.end()) {
-                    tokens.push_back(token_to_id["▁"]);
-                } else if (token_to_id.find("_") != token_to_id.end()) {
-                    tokens.push_back(token_to_id["_"]);
+            std::string single_char = processed_text.substr(pos, 1);
+            
+            // Check with space prefix for non-first characters
+            if (!first_token && single_char == " ") {
+                std::string with_special_space = "Ġ";  // Ġ prefix alone
+                std::string with_underscore = "_";     // _ prefix alone
+                
+                if (token_to_id.find(with_special_space) != token_to_id.end()) {
+                    tokens.push_back(token_to_id[with_special_space]);
+                } else if (token_to_id.find(with_underscore) != token_to_id.end()) {
+                    tokens.push_back(token_to_id[with_underscore]);
+                } else if (token_to_id.find(single_char) != token_to_id.end()) {
+                    tokens.push_back(token_to_id[single_char]);
                 } else {
-                    tokens.push_back(262); // Default space token
+                    // Unknown token
+                    tokens.push_back(0);
                 }
+            } else if (token_to_id.find(single_char) != token_to_id.end()) {
+                tokens.push_back(token_to_id[single_char]);
             } else {
-                // For all other characters
-                std::string char_str(1, c);
-                if (token_to_id.find(char_str) != token_to_id.end()) {
-                    tokens.push_back(token_to_id[char_str]);
-                } else {
-                    tokens.push_back(0); // Unknown token
-                }
+                // Unknown token
+                tokens.push_back(0);
             }
             
             pos++;
             first_token = false;
         }
+    }
+    
+    // Check if there's an EOS (end of string) token
+    std::string eos_token = "</s>";
+    if (token_to_id.find(eos_token) != token_to_id.end()) {
+        tokens.push_back(token_to_id[eos_token]);
     }
     
     return tokens;
