@@ -70,3 +70,8 @@ If you encounter different embeddings between C++ and Python implementations, it
 1. The C++ implementation using different/mock data instead of the actual embeddings from the model
 2. The Python implementation normalizing embeddings, while the C++ implementation doesn't
 3. Using incorrect embedding dimensions in one implementation
+
+
+## Dependencies
+sudo apt-get source libc6
+sudo apt install glibc-source

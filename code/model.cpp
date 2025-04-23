@@ -3,6 +3,7 @@
 #include "rms_norm.h"
 #include "ggml/include/gguf.h"
 #include "ggml/include/ggml.h"
+#include "ggml/include/ggml-cpu.h"
 #include <iostream>
 #include <iomanip>
 #include <vector>
@@ -10,7 +11,6 @@
 
 int main() {
     ggml_time_init();
-    
     // Load model and initialize tokenizer
     std::cout << "Loading model..." << std::endl;
     Tokenizer tokenizer("./gguf/1b-q8_0.gguf");

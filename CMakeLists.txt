@@ -25,6 +25,7 @@ set(CODE_TARGETS
     config
     example_matrix
     rms_norm
+    formula
     ) # Target all the example files
 
 foreach(TARGET ${CODE_TARGETS}) # For each example file
@@ -41,3 +42,5 @@ target_link_libraries(embedding PRIVATE tokenizer_lib)
 target_link_libraries(config PRIVATE tokenizer_lib)
 # Link rms_norm with tokenizer library
 target_link_libraries(rms_norm PRIVATE tokenizer_lib)
+# Link formula with tokenizer library and rms_norm
+target_link_libraries(formula PRIVATE tokenizer_lib rms_norm_lib)

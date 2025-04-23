@@ -1,0 +1,273 @@
+====== Starting transformer inference ======
+
+====== Building transformer layer 0 ======
+STEP 0: Initial setup
+Input dimensions: ne0=2048, ne1=2, type=0
+STEP 1: Loading model weights (inspection only)
+Q weights: ne0=2048, ne1=2048, type=8
+K weights: ne0=2048, ne1=512, type=8
+V weights: ne0=2048, ne1=512, type=8
+O weights: ne0=2048, ne1=2048, type=8
+Pre-norm weights: ne0=2048, ne1=1, type=0
+FFN norm weights: ne0=2048, ne1=1, type=0
+Gate weights: ne0=2048, ne1=8192, type=8
+Up weights: ne0=2048, ne1=8192, type=8
+Down weights: ne0=8192, ne1=2048, type=8
+STEP 2: Creating pass-through implementation
+Instead of actual computation, just returning a copy of the input
+Layer 0 completed (pass-through mode)
+
+====== Building transformer layer 1 ======
+STEP 0: Initial setup
+Input dimensions: ne0=2048, ne1=2, type=0
+STEP 1: Loading model weights (inspection only)
+Q weights: ne0=2048, ne1=2048, type=8
+K weights: ne0=2048, ne1=512, type=8
+V weights: ne0=2048, ne1=512, type=8
+O weights: ne0=2048, ne1=2048, type=8
+Pre-norm weights: ne0=2048, ne1=1, type=0
+FFN norm weights: ne0=2048, ne1=1, type=0
+Gate weights: ne0=2048, ne1=8192, type=8
+Up weights: ne0=2048, ne1=8192, type=8
+Down weights: ne0=8192, ne1=2048, type=8
+STEP 2: Creating pass-through implementation
+Instead of actual computation, just returning a copy of the input
+Layer 1 completed (pass-through mode)
+
+====== Building transformer layer 2 ======
+STEP 0: Initial setup
+Input dimensions: ne0=2048, ne1=2, type=0
+STEP 1: Loading model weights (inspection only)
+Q weights: ne0=2048, ne1=2048, type=8
+K weights: ne0=2048, ne1=512, type=8
+V weights: ne0=2048, ne1=512, type=8
+O weights: ne0=2048, ne1=2048, type=8
+Pre-norm weights: ne0=2048, ne1=1, type=0
+FFN norm weights: ne0=2048, ne1=1, type=0
+Gate weights: ne0=2048, ne1=8192, type=8
+Up weights: ne0=2048, ne1=8192, type=8
+Down weights: ne0=8192, ne1=2048, type=8
+STEP 2: Creating pass-through implementation
+Instead of actual computation, just returning a copy of the input
+Layer 2 completed (pass-through mode)
+
+====== Building transformer layer 3 ======
+STEP 0: Initial setup
+Input dimensions: ne0=2048, ne1=2, type=0
+STEP 1: Loading model weights (inspection only)
+Q weights: ne0=2048, ne1=2048, type=8
+K weights: ne0=2048, ne1=512, type=8
+V weights: ne0=2048, ne1=512, type=8
+O weights: ne0=2048, ne1=2048, type=8
+Pre-norm weights: ne0=2048, ne1=1, type=0
+FFN norm weights: ne0=2048, ne1=1, type=0
+Gate weights: ne0=2048, ne1=8192, type=8
+Up weights: ne0=2048, ne1=8192, type=8
+Down weights: ne0=8192, ne1=2048, type=8
+STEP 2: Creating pass-through implementation
+Instead of actual computation, just returning a copy of the input
+Layer 3 completed (pass-through mode)
+
+====== Building transformer layer 4 ======
+STEP 0: Initial setup
+Input dimensions: ne0=2048, ne1=2, type=0
+STEP 1: Loading model weights (inspection only)
+Q weights: ne0=2048, ne1=2048, type=8
+K weights: ne0=2048, ne1=512, type=8
+V weights: ne0=2048, ne1=512, type=8
+O weights: ne0=2048, ne1=2048, type=8
+Pre-norm weights: ne0=2048, ne1=1, type=0
+FFN norm weights: ne0=2048, ne1=1, type=0
+Gate weights: ne0=2048, ne1=8192, type=8
+Up weights: ne0=2048, ne1=8192, type=8
+Down weights: ne0=8192, ne1=2048, type=8
+STEP 2: Creating pass-through implementation
+Instead of actual computation, just returning a copy of the input
+Layer 4 completed (pass-through mode)
+
+====== Building transformer layer 5 ======
+STEP 0: Initial setup
+Input dimensions: ne0=2048, ne1=2, type=0
+STEP 1: Loading model weights (inspection only)
+Q weights: ne0=2048, ne1=2048, type=8
+K weights: ne0=2048, ne1=512, type=8
+V weights: ne0=2048, ne1=512, type=8
+O weights: ne0=2048, ne1=2048, type=8
+Pre-norm weights: ne0=2048, ne1=1, type=0
+FFN norm weights: ne0=2048, ne1=1, type=0
+Gate weights: ne0=2048, ne1=8192, type=8
+Up weights: ne0=2048, ne1=8192, type=8
+Down weights: ne0=8192, ne1=2048, type=8
+STEP 2: Creating pass-through implementation
+Instead of actual computation, just returning a copy of the input
+Layer 5 completed (pass-through mode)
+
+====== Building transformer layer 6 ======
+STEP 0: Initial setup
+Input dimensions: ne0=2048, ne1=2, type=0
+STEP 1: Loading model weights (inspection only)
+Q weights: ne0=2048, ne1=2048, type=8
+K weights: ne0=2048, ne1=512, type=8
+V weights: ne0=2048, ne1=512, type=8
+O weights: ne0=2048, ne1=2048, type=8
+Pre-norm weights: ne0=2048, ne1=1, type=0
+FFN norm weights: ne0=2048, ne1=1, type=0
+Gate weights: ne0=2048, ne1=8192, type=8
+Up weights: ne0=2048, ne1=8192, type=8
+Down weights: ne0=8192, ne1=2048, type=8
+STEP 2: Creating pass-through implementation
+Instead of actual computation, just returning a copy of the input
+Layer 6 completed (pass-through mode)
+
+====== Building transformer layer 7 ======
+STEP 0: Initial setup
+Input dimensions: ne0=2048, ne1=2, type=0
+STEP 1: Loading model weights (inspection only)
+Q weights: ne0=2048, ne1=2048, type=8
+K weights: ne0=2048, ne1=512, type=8
+V weights: ne0=2048, ne1=512, type=8
+O weights: ne0=2048, ne1=2048, type=8
+Pre-norm weights: ne0=2048, ne1=1, type=0
+FFN norm weights: ne0=2048, ne1=1, type=0
+Gate weights: ne0=2048, ne1=8192, type=8
+Up weights: ne0=2048, ne1=8192, type=8
+Down weights: ne0=8192, ne1=2048, type=8
+STEP 2: Creating pass-through implementation
+Instead of actual computation, just returning a copy of the input
+Layer 7 completed (pass-through mode)
+
+====== Building transformer layer 8 ======
+STEP 0: Initial setup
+Input dimensions: ne0=2048, ne1=2, type=0
+STEP 1: Loading model weights (inspection only)
+Q weights: ne0=2048, ne1=2048, type=8
+K weights: ne0=2048, ne1=512, type=8
+V weights: ne0=2048, ne1=512, type=8
+O weights: ne0=2048, ne1=2048, type=8
+Pre-norm weights: ne0=2048, ne1=1, type=0
+FFN norm weights: ne0=2048, ne1=1, type=0
+Gate weights: ne0=2048, ne1=8192, type=8
+Up weights: ne0=2048, ne1=8192, type=8
+Down weights: ne0=8192, ne1=2048, type=8
+STEP 2: Creating pass-through implementation
+Instead of actual computation, just returning a copy of the input
+Layer 8 completed (pass-through mode)
+
+====== Building transformer layer 9 ======
+STEP 0: Initial setup
+Input dimensions: ne0=2048, ne1=2, type=0
+STEP 1: Loading model weights (inspection only)
+Q weights: ne0=2048, ne1=2048, type=8
+K weights: ne0=2048, ne1=512, type=8
+V weights: ne0=2048, ne1=512, type=8
+O weights: ne0=2048, ne1=2048, type=8
+Pre-norm weights: ne0=2048, ne1=1, type=0
+FFN norm weights: ne0=2048, ne1=1, type=0
+Gate weights: ne0=2048, ne1=8192, type=8
+Up weights: ne0=2048, ne1=8192, type=8
+Down weights: ne0=8192, ne1=2048, type=8
+STEP 2: Creating pass-through implementation
+Instead of actual computation, just returning a copy of the input
+Layer 9 completed (pass-through mode)
+
+====== Building transformer layer 10 ======
+STEP 0: Initial setup
+Input dimensions: ne0=2048, ne1=2, type=0
+STEP 1: Loading model weights (inspection only)
+Q weights: ne0=2048, ne1=2048, type=8
+K weights: ne0=2048, ne1=512, type=8
+V weights: ne0=2048, ne1=512, type=8
+O weights: ne0=2048, ne1=2048, type=8
+Pre-norm weights: ne0=2048, ne1=1, type=0
+FFN norm weights: ne0=2048, ne1=1, type=0
+Gate weights: ne0=2048, ne1=8192, type=8
+Up weights: ne0=2048, ne1=8192, type=8
+Down weights: ne0=8192, ne1=2048, type=8
+STEP 2: Creating pass-through implementation
+Instead of actual computation, just returning a copy of the input
+Layer 10 completed (pass-through mode)
+
+====== Building transformer layer 11 ======
+STEP 0: Initial setup
+Input dimensions: ne0=2048, ne1=2, type=0
+STEP 1: Loading model weights (inspection only)
+Q weights: ne0=2048, ne1=2048, type=8
+K weights: ne0=2048, ne1=512, type=8
+V weights: ne0=2048, ne1=512, type=8
+O weights: ne0=2048, ne1=2048, type=8
+Pre-norm weights: ne0=2048, ne1=1, type=0
+FFN norm weights: ne0=2048, ne1=1, type=0
+Gate weights: ne0=2048, ne1=8192, type=8
+Up weights: ne0=2048, ne1=8192, type=8
+Down weights: ne0=8192, ne1=2048, type=8
+STEP 2: Creating pass-through implementation
+Instead of actual computation, just returning a copy of the input
+Layer 11 completed (pass-through mode)
+
+====== Building transformer layer 12 ======
+STEP 0: Initial setup
+Input dimensions: ne0=2048, ne1=2, type=0
+STEP 1: Loading model weights (inspection only)
+Q weights: ne0=2048, ne1=2048, type=8
+K weights: ne0=2048, ne1=512, type=8
+V weights: ne0=2048, ne1=512, type=8
+O weights: ne0=2048, ne1=2048, type=8
+Pre-norm weights: ne0=2048, ne1=1, type=0
+FFN norm weights: ne0=2048, ne1=1, type=0
+Gate weights: ne0=2048, ne1=8192, type=8
+Up weights: ne0=2048, ne1=8192, type=8
+Down weights: ne0=8192, ne1=2048, type=8
+STEP 2: Creating pass-through implementation
+Instead of actual computation, just returning a copy of the input
+Layer 12 completed (pass-through mode)
+
+====== Building transformer layer 13 ======
+STEP 0: Initial setup
+Input dimensions: ne0=2048, ne1=2, type=0
+STEP 1: Loading model weights (inspection only)
+Q weights: ne0=2048, ne1=2048, type=8
+K weights: ne0=2048, ne1=512, type=8
+V weights: ne0=2048, ne1=512, type=8
+O weights: ne0=2048, ne1=2048, type=8
+Pre-norm weights: ne0=2048, ne1=1, type=0
+FFN norm weights: ne0=2048, ne1=1, type=0
+Gate weights: ne0=2048, ne1=8192, type=8
+Up weights: ne0=2048, ne1=8192, type=8
+Down weights: ne0=8192, ne1=2048, type=8
+STEP 2: Creating pass-through implementation
+Instead of actual computation, just returning a copy of the input
+Layer 13 completed (pass-through mode)
+
+====== Building transformer layer 14 ======
+STEP 0: Initial setup
+Input dimensions: ne0=2048, ne1=2, type=0
+STEP 1: Loading model weights (inspection only)
+Q weights: ne0=2048, ne1=2048, type=8
+K weights: ne0=2048, ne1=512, type=8
+V weights: ne0=2048, ne1=512, type=8
+O weights: ne0=2048, ne1=2048, type=8
+Pre-norm weights: ne0=2048, ne1=1, type=0
+FFN norm weights: ne0=2048, ne1=1, type=0
+Gate weights: ne0=2048, ne1=8192, type=8
+Up weights: ne0=2048, ne1=8192, type=8
+Down weights: ne0=8192, ne1=2048, type=8
+STEP 2: Creating pass-through implementation
+Instead of actual computation, just returning a copy of the input
+Layer 14 completed (pass-through mode)
+
+====== Building transformer layer 15 ======
+STEP 0: Initial setup
+Input dimensions: ne0=2048, ne1=2, type=0
+STEP 1: Loading model weights (inspection only)
+Q weights: ne0=2048, ne1=2048, type=8
+K weights: ne0=2048, ne1=512, type=8
+V weights: ne0=2048, ne1=512, type=8
+O weights: ne0=2048, ne1=2048, type=8
+Pre-norm weights: ne0=2048, ne1=1, type=0
+FFN norm weights: ne0=2048, ne1=1, type=0
+Gate weights: ne0=2048, ne1=8192, type=8
+Up weights: ne0=2048, ne1=8192, type=8
+Down weights: ne0=8192, ne1=2048, type=8
+STEP 2: Creating pass-through implementation
+Instead of actual computation, just returning a copy of the input
+Layer 15 completed (pass-through mode)
